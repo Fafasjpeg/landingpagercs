@@ -40,6 +40,7 @@ form.addEventListener('submit', async (e) => {
     });
     if (!r.ok) throw new Error(r.status);
     form.reset();
+    evento('Lead');
     aviso('Recebemos seus dados! Em breve um especialista entrará em contato.', 'ok');
   } catch {
     aviso('Não foi possível enviar agora. Tente novamente.', 'erro');
@@ -48,14 +49,31 @@ form.addEventListener('submit', async (e) => {
   }
 });
 
+// Meta Pixel: só é carregado depois que o visitante aceita os cookies
+const PIXEL_ID = '822735764193077';
+function carregarPixel() {
+  if (window.fbq) return;
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', PIXEL_ID);
+  fbq('track', 'PageView');
+}
+function evento(nome) { if (window.fbq) fbq('track', nome); }
+
 // Banner LGPD
 const cookies = document.getElementById('cookies');
-try { if (!localStorage.getItem('cookies')) cookies.hidden = false; } catch { cookies.hidden = false; }
+let escolha = null;
+try { escolha = localStorage.getItem('cookies'); } catch {}
+if (!escolha) cookies.hidden = false;
+if (escolha === 'aceitar') carregarPixel();
+
 cookies.addEventListener('click', (e) => {
   const acao = e.target.dataset.cookie;
   if (!acao) return;
   if (acao !== 'config') {
     try { localStorage.setItem('cookies', acao); } catch {}
   }
+  if (acao === 'aceitar') carregarPixel();
   cookies.hidden = true;
 });
+
+document.querySelector('.wpp').addEventListener('click', () => evento('Contact'));
