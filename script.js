@@ -49,7 +49,7 @@ form.addEventListener('submit', async (e) => {
   }
 });
 
-// Meta Pixel: só é carregado depois que o visitante aceita os cookies
+// Meta Pixel: carregado sempre (medição de desempenho do funil de vendas)
 const PIXEL_ID = '822735764193077';
 function carregarPixel() {
   if (window.fbq) return;
@@ -64,15 +64,12 @@ const cookies = document.getElementById('cookies');
 let escolha = null;
 try { escolha = localStorage.getItem('cookies'); } catch {}
 if (!escolha) cookies.hidden = false;
-if (escolha === 'aceitar') carregarPixel();
+carregarPixel();
 
 cookies.addEventListener('click', (e) => {
   const acao = e.target.dataset.cookie;
   if (!acao) return;
-  if (acao !== 'config') {
-    try { localStorage.setItem('cookies', acao); } catch {}
-  }
-  if (acao === 'aceitar') carregarPixel();
+  try { localStorage.setItem('cookies', acao); } catch {}
   cookies.hidden = true;
 });
 
