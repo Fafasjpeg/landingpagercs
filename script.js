@@ -40,11 +40,11 @@ form.addEventListener('submit', async (e) => {
     });
     if (!r.ok) throw new Error(r.status);
     form.reset();
-    evento('Lead');
-    aviso('Recebemos seus dados! Em breve um especialista entrará em contato.', 'ok');
+    aviso('Recebemos seus dados! Redirecionando...', 'ok');
+    try { sessionStorage.setItem('lead_ok', '1'); } catch {} // a página /obrigado avisa o Pixel (evento custom, não Lead)
+    location.href = '/obrigado';
   } catch {
     aviso('Não foi possível enviar agora. Tente novamente.', 'erro');
-  } finally {
     btn.disabled = false;
   }
 });
