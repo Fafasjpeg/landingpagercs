@@ -6,14 +6,16 @@ export default async function handler(req, res) {
   const url = process.env.N8N_WEBHOOK_URL;
   if (!url) return res.status(500).json({ error: 'N8N_WEBHOOK_URL não configurada' });
 
-  const body = typeof req.body === 'string' ? JSON.parse(req.body || '{}') : req.body || {};
+  let body;
+  try { body = typeof req.body === 'string' ? JSON.parse(req.body || '{}') : req.body || {}; }
+  catch { return res.status(400).json({ error: 'JSON inválido' }); }
   if (body.website) return res.status(200).json({ ok: true }); // honeypot: ignora bots
   delete body.website;
 
   try {
     const headers = { 'Content-Type': 'application/json' };
     if (process.env.N8N_WEBHOOK_TOKEN) headers.Authorization = process.env.N8N_WEBHOOK_TOKEN; // opcional (Header Auth no n8n)
-    const r = await fetch(url, { method: 'POST', headers, body: JSON.stringify(body) });
+    const r = await fetch(url, { method: 'POST', headers, body: JSON.stringify(body), signal: AbortSignal.timeout(10000) }); // sem resposta em 10s -> cai no catch (502)
     if (!r.ok) return res.status(502).json({ error: 'n8n respondeu ' + r.status });
     return res.status(200).json({ ok: true });
   } catch {

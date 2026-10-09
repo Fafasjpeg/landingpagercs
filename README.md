@@ -4,8 +4,10 @@ HTML + CSS + JS mínimo. Sem build.
 
 ## Estrutura
 - `index.html`, `style.css`, `script.js` — a página
+- `obrigado.html`, `obrigado.css`, `obrigado.js` — página de agradecimento (o formulário redireciona para `/obrigado` após o envio)
+- `privacidade.html` — política de privacidade
 - `api/lead.js` — função da Vercel que envia o formulário ao n8n
-- `assets/` — coloque aqui: `hero.webp`, `solucao.webp`, `roberto.jpg`, `pedro.jpg`, `logo-branca.png`, `logo-preta.png` (opcionais; sem elas a página usa gradientes/iniciais)
+- `assets/` — `hero.webp`, `solucao.webp`, `logo-branca.png`, `logo-preta.png` (já otimizados: logos 240×120, solucao 800×1170; mantenha esses tamanhos ao trocar)
 
 ## n8n
 1. No n8n, crie um nó **Webhook** (método `POST`) e copie a **Production URL**.

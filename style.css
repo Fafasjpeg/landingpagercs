@@ -106,8 +106,6 @@ h2 { font-size: 50px; line-height: 60px; }
 .aspas { font-size: 85px; line-height: 1; color: var(--roxo); }
 .depo__sep i { width: 1px; height: 167px; background: var(--lilas); margin-top: 10px; }
 .autor { display: flex; gap: 14px; align-items: center; margin-top: 30px; }
-.avatar { width: 92px; height: 92px; border-radius: 50%; background: #F0F3F5 center / cover; flex-shrink: 0;
-  display: grid; place-items: center; color: var(--roxo); font-weight: 600; font-size: 28px; }
 .autor strong { display: block; color: var(--roxo); font-weight: 600; line-height: 18.7px; }
 .autor span { display: block; font-weight: 400; color: #000; line-height: 18.7px; }
 .estrelas { color: var(--roxo); font-size: 22px; letter-spacing: 2px; margin-bottom: 4px; }
@@ -192,7 +190,6 @@ body:has(#cookies:not([hidden])) .wpp { bottom: 90px; }
   .depo__grid { display: block; margin-bottom: 30px; }
   .depo__sep { display: none; }
   .depo article { padding: 0 30px; margin-bottom: 35px; }
-  .avatar { width: 86px; height: 86px; }
   .autor strong, .autor span { font-size: 18px; line-height: 25.2px; }
   .estrelas { font-size: 18px; }
   .btn--roxo { max-width: 270px; }
